@@ -1120,9 +1120,65 @@ details.faq-item[open] summary::after {
   }
   .fade-up { opacity: 1 !important; transform: none !important; }
 }
+
+  /* ============ PORTAL OBRIGATÓRIO (GATE) ============ */
+  .gate-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #000; display: flex; align-items: center; justify-content: center;
+    transition: opacity .7s ease, visibility .7s ease;
+  }
+  .gate-overlay.gate-open { opacity: 0; visibility: hidden; pointer-events: none; }
+  .gate-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .gate-ui {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding-top: max(24px, env(safe-area-inset-top, 0px));
+    pointer-events: none;
+  }
+  .gate-brand {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+    letter-spacing: .22em; color: #fff; text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0,0,0,.8);
+  }
+  .gate-progress-wrap {
+    width: min(320px, 72vw); height: 3px; background: rgba(255,255,255,.18);
+    border-radius: 2px; overflow: hidden;
+  }
+  .gate-progress-bar {
+    height: 100%; width: 0%; background: #fff; border-radius: 2px;
+    transition: width .25s linear;
+  }
+  .gate-count {
+    font-family: 'Manrope', sans-serif; font-size: 12px; letter-spacing: .18em;
+    color: rgba(255,255,255,.85); text-shadow: 0 1px 8px rgba(0,0,0,.8);
+  }
+  .gate-hint {
+    position: absolute; bottom: max(28px, env(safe-area-inset-bottom, 0px)); left: 0; right: 0;
+    text-align: center; z-index: 2; pointer-events: none;
+    font-family: 'Manrope', sans-serif; font-size: 12px; letter-spacing: .14em;
+    color: rgba(255,255,255,.6); text-shadow: 0 1px 8px rgba(0,0,0,.8);
+    text-transform: uppercase;
+  }
+  /* Bloqueio total do site enquanto o gate está ativo */
+  body.gate-locked { overflow: hidden !important; height: 100vh !important; }
+  body.gate-locked > *:not(.gate-overlay) { visibility: hidden !important; }
+  body:not(.gate-locked) .gate-overlay { display: none; }
+
 </style>
 </head>
-<body>
+<body class="gate-locked">
+
+<!-- ============ PORTAL OBRIGATÓRIO: VÍDEO DE ENTRADA ============ -->
+<div class="gate-overlay" id="gateOverlay" aria-label="Vídeo obrigatório de entrada">
+  <video class="gate-video" id="gateVideo" src="assets/videos/video_intro_obrigatorio.mp4" playsinline preload="auto"></video>
+  <div class="gate-ui">
+    <div class="gate-brand">WHOOP 5.0 · Angola</div>
+    <div class="gate-progress-wrap"><div class="gate-progress-bar" id="gateBar"></div></div>
+    <div class="gate-count" id="gateCount">Assiste até ao fim para entrar · 10s</div>
+  </div>
+  <div class="gate-hint" id="gateHint">O vídeo desbloqueia o site ao terminar</div>
+</div>
+
 
 <div class="film-grain" aria-hidden="true"></div>
 
@@ -1838,5 +1894,72 @@ details.faq-item[open] summary::after {
 
 })();
 </script>
+
+<script>
+// ============ LÓGICA DO PORTAL OBRIGATÓRIO ============
+(function() {
+  var video  = document.getElementById('gateVideo');
+  var bar    = document.getElementById('gateBar');
+  var count  = document.getElementById('gateCount');
+  var hint   = document.getElementById('gateHint');
+  var overlay= document.getElementById('gateOverlay');
+
+  function unlock() {
+    document.body.classList.remove('gate-locked');
+    overlay.classList.add('gate-open');
+    window.scrollTo(0, 0);
+    try { video.pause(); } catch(e) {}
+  }
+
+  if (!video || !overlay) { unlock(); return; }
+
+  // Progresso e contagem
+  var DUR = 10; // desbloqueia aos 10 segundos
+  video.addEventListener('timeupdate', function() {
+    var pct = Math.min(100, (video.currentTime / DUR) * 100);
+    bar.style.width = pct + '%';
+    var left = Math.max(0, Math.ceil(DUR - video.currentTime));
+    if (left > 0) {
+      count.textContent = 'Assiste até ao fim para entrar · ' + left + 's';
+    }
+  });
+
+  // Desbloqueio: quando o vídeo chega aos 10s OU ao fim
+  video.addEventListener('timeupdate', function() {
+    if (video.currentTime >= DUR) unlock();
+  });
+  video.addEventListener('ended', unlock);
+
+  // Se o vídeo falhar a carregar (rede/codec), libertar o visitante
+  video.addEventListener('error', unlock);
+
+  // Iniciar reprodução (política de autoplay: tentar com som, fallback mudo)
+  function start() {
+    var p = video.play();
+    if (p && p.catch) {
+      p.catch(function() {
+        video.muted = true;
+        video.play().catch(function() {
+          // Último recurso: tocar ao primeiro toque do visitante
+          hint.textContent = 'Toca no ecrã para iniciar o vídeo';
+          document.addEventListener('touchstart', function once() {
+            video.play(); document.removeEventListener('touchstart', once);
+          }, { once: true });
+          document.addEventListener('click', function onceC() {
+            video.play(); document.removeEventListener('click', onceC);
+          }, { once: true });
+        });
+      });
+    }
+  }
+  start();
+
+  // Redundância: timer de segurança de 30s — se algo travar, libertar
+  setTimeout(function() {
+    if (document.body.classList.contains('gate-locked')) unlock();
+  }, 30000);
+})();
+</script>
+
 </body>
 </html>
