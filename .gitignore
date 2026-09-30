@@ -1,0 +1,4 @@
+# Ficheiros temporários do sistema
+*.swp
+*~
+.DS_Store

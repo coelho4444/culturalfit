@@ -1,0 +1,1842 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHOOP 5.0 Angola | Monitoriza o Sono, a Recuperação e o Desempenho</title>
+<meta name="description" content="Descobre o WHOOP 5.0 em Angola. Acompanha o teu sono, recuperação e esforço físico. Disponível por 150.000 Kz, com 1 mês de subscrição incluído.">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / Redes Sociais -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_AO">
+<meta property="og:title" content="WHOOP 5.0 Angola | Monitoriza o Sono, a Recuperação e o Desempenho">
+<meta property="og:description" content="Descobre o WHOOP 5.0 em Angola. Acompanha o teu sono, recuperação e esforço físico. Disponível por 150.000 Kz, com 1 mês de subscrição incluído.">
+<meta property="og:site_name" content="WHOOP 5.0 Angola">
+
+<!-- Tipografia: Manrope + Syne para títulos cinematográficos potentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  color-scheme: dark;
+  /* Paleta cromática do brief */
+  --bg-deep: #050505;
+  --bg-surface: #101010;
+  --bg-elevated: #161616;
+  --border-subtle: #252525;
+  --border-strong: #3a3a3a;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B5B5B5;
+  --text-muted: #707070;
+  --accent: #FFFFFF;
+  --accent-contrast: #050505;
+
+  --font-display: 'Syne', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --gut: 24px;
+  --max: 1200px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grão cinematográfico subtil */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Tipografia */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-wrap: balance;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.section-head {
+  max-width: 820px;
+  margin-bottom: clamp(48px, 7vw, 84px);
+}
+
+.section-head h2 {
+  font-size: clamp(34px, 5.2vw, 64px);
+  margin-bottom: 20px;
+}
+
+.section-head p {
+  color: var(--text-secondary);
+  font-size: clamp(17px, 1.8vw, 20px);
+  max-width: 58ch;
+  font-weight: 300;
+}
+
+section {
+  padding-block: clamp(80px, 12vw, 160px);
+  position: relative;
+}
+
+/* Header de navegação minimalista */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-block: 20px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+.header.scrolled {
+  background: rgba(5, 5, 5, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--border-subtle);
+  padding-block: 14px;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.brand span {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 8px;
+  letter-spacing: 0.1em;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-price {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: none;
+}
+@media (min-width: 640px) { .nav-price { display: inline-block; } }
+.nav-price strong { color: var(--text-primary); }
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-deep);
+}
+.btn-primary:hover {
+  background: #E5E5E5;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn-secondary:hover {
+  border-color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 11px;
+}
+
+/* ========================================================
+   SECÇÃO 1 — HERO CINEMATOGRÁFICO
+   ======================================================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: clamp(60px, 10vw, 110px);
+  padding-top: 140px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-media-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.65) contrast(1.15);
+  transform: scale(1.03);
+  transition: transform 10s ease-out;
+}
+.hero:hover .hero-media-bg {
+  transform: scale(1.0);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.2) 40%, rgba(5,5,5,0.85) 85%, var(--bg-deep) 100%),
+    linear-gradient(90deg, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.4) 60%, transparent 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 860px;
+}
+.hero h1 {
+  font-size: clamp(44px, 7.5vw, 92px);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.hero .hero-sub {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.8vw, 44px);
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.hero-text {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--text-secondary);
+  max-width: 54ch;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px 28px;
+  margin-bottom: 32px;
+  padding-block: 16px;
+  border-block: 1px solid var(--border-subtle);
+}
+.hero-price {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.hero-price span {
+  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-right: 4px;
+}
+.hero-note {
+  font-size: 14px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ========================================================
+   SECÇÃO 2 — O CORPO PARA ALÉM DO ESFORÇO
+   ======================================================== */
+.transition-sec {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+.transition-grid {
+  display: grid;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .transition-grid { grid-template-columns: 1.1fr 0.9fr; }
+}
+.transition-text h2 {
+  font-size: clamp(34px, 5vw, 58px);
+  margin-bottom: 24px;
+}
+.transition-text p {
+  font-size: clamp(18px, 2.2vw, 24px);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 300;
+}
+.transition-visual {
+  position: relative;
+  aspect-ratio: 4/5;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.transition-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.06) brightness(0.95);
+}
+.visual-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(5,5,5,0.7);
+  padding: 8px 14px;
+  backdrop-filter: blur(8px);
+  border-left: 2px solid var(--text-primary);
+}
+
+/* ========================================================
+   SECÇÃO 3 — TRÊS DIMENSÕES DO DESEMPENHO
+   ======================================================== */
+.dimensions-grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .dimensions-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.dim-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: clamp(28px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.dim-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+}
+.dim-number {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+.dim-body {
+  margin-top: auto;
+}
+.dim-body h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  margin-bottom: 14px;
+}
+.dim-body p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.dim-bar {
+  height: 2px;
+  background: var(--border-subtle);
+  margin-top: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.dim-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text-primary);
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dim-card:hover .dim-bar::after {
+  transform: translateX(0);
+}
+
+/* ========================================================
+   SECÇÃO 4 — A TECNOLOGIA NO TEU PULSO
+   ======================================================== */
+.tech-sec {
+  background: var(--bg-surface);
+  border-block: 1px solid var(--border-subtle);
+}
+.tech-showcase {
+  display: grid;
+  gap: clamp(40px, 6vw, 70px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .tech-showcase { grid-template-columns: 1fr 1fr; }
+}
+
+/* ========================================================
+   CARROSSEL INTERATIVO DE CORES DO WHOOP
+   ======================================================== */
+
+/* Visual dos Dashboards nas 3 Dimensões */
+.dim-card {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dim-media {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+  position: relative;
+}
+.dim-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) brightness(0.92);
+  transition: transform 0.4s ease;
+}
+.dim-card:hover .dim-media img {
+  transform: scale(1.04);
+}
+.dim-content {
+  padding: clamp(24px, 3.5vw, 36px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Secção de Vídeos em Angola */
+.videos-grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .videos-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.video-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+.video-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+}
+.video-player-box {
+  position: relative;
+  aspect-ratio: 16/10;
+  background: #000;
+  overflow: hidden;
+}
+.video-player-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) contrast(1.1);
+  transition: transform 0.5s ease;
+}
+.video-card:hover .video-player-box img {
+  transform: scale(1.05);
+}
+.video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  transition: all 0.2s ease;
+}
+.video-play-btn::after {
+  content: '';
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-left: 14px solid #050505;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+}
+.video-card:hover .video-play-btn {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: #FFFFFF;
+}
+.video-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(5,5,5,0.75);
+  backdrop-filter: blur(8px);
+  padding: 5px 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.video-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.video-card-body h3 {
+  font-size: 19px;
+  line-height: 1.25;
+}
+.video-card-body p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.whoop-carousel-container {
+  position: relative;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+.whoop-carousel {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  display: flex;
+}
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1c1c1c 0%, #0d0d0d 100%);
+}
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 18px;
+  filter: contrast(1.08) brightness(0.96);
+  user-select: none;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(16, 16, 16, 0.75);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+.carousel-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-deep);
+  transform: translateY(-50%) scale(1.08);
+}
+.carousel-btn.prev { left: 16px; }
+.carousel-btn.next { right: 16px; }
+.carousel-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.carousel-ui {
+  padding: 16px 20px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.carousel-color-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.carousel-color-name span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.color-swatches {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.swatch-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+.swatch-btn:hover { transform: scale(1.15); }
+.swatch-btn.active {
+  border-color: #FFFFFF;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+.tech-photo {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tech-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) brightness(0.9);
+}
+.tech-details h2 {
+  font-size: clamp(32px, 4.4vw, 54px);
+  margin-bottom: 24px;
+}
+.tech-details p {
+  color: var(--text-secondary);
+  font-size: 16.5px;
+  margin-bottom: 24px;
+  line-height: 1.65;
+}
+.tech-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 32px;
+}
+.tech-features li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+.tech-features li strong {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 14px;
+  min-width: 130px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ========================================================
+   SECÇÃO 5 — PARA QUEM PROCURA MAIS
+   ======================================================== */
+.profiles-grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .profiles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.profile-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+}
+.profile-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.2) brightness(0.65);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+.profile-card:hover img {
+  transform: scale(1.04);
+  filter: grayscale(80%) contrast(1.25) brightness(0.75);
+}
+.profile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(5,5,5,0.92) 100%);
+  z-index: 1;
+}
+.profile-content {
+  position: relative;
+  z-index: 2;
+}
+.profile-tag {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.profile-content h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.profile-content p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ========================================================
+   SECÇÃO 6 — A OFERTA
+   ======================================================== */
+.offer-sec {
+  border-top: 1px solid var(--border-subtle);
+}
+.offer-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  max-width: 840px;
+  margin-inline: auto;
+  padding: clamp(36px, 6vw, 64px);
+  position: relative;
+}
+.offer-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.offer-head h2 {
+  font-size: clamp(36px, 5vw, 56px);
+}
+.offer-price-tag {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.offer-price-tag span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+.offer-includes {
+  margin-block: 36px;
+}
+.offer-includes-title {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.offer-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.offer-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 17px;
+  color: var(--text-primary);
+}
+.offer-list li::before {
+  content: '—';
+  color: var(--text-muted);
+}
+.offer-notes {
+  background: var(--bg-elevated);
+  border-left: 2px solid var(--text-primary);
+  padding: 20px 24px;
+  margin-bottom: 36px;
+}
+.offer-notes p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.offer-notes p + p {
+  margin-top: 10px;
+}
+.offer-action {
+  text-align: center;
+}
+.offer-action .btn {
+  width: 100%;
+}
+@media (min-width: 500px) {
+  .offer-action .btn { width: auto; min-width: 280px; }
+}
+
+/* ========================================================
+   SECÇÃO 7 — CONFIANÇA E QUALIDADE
+   ======================================================== */
+.trust-sec {
+  background: var(--bg-surface);
+  border-block: 1px solid var(--border-subtle);
+}
+.trust-box {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+.trust-box h2 {
+  font-size: clamp(32px, 4.4vw, 52px);
+  margin-bottom: 24px;
+}
+.trust-box p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ========================================================
+   SECÇÃO 8 — PERGUNTAS FREQUENTES (FAQ)
+   ======================================================== */
+.faq-list {
+  max-width: 840px;
+  margin-inline: auto;
+  border-top: 1px solid var(--border-subtle);
+}
+details.faq-item {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease;
+}
+details.faq-item summary {
+  list-style: none;
+  padding-block: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+details.faq-item summary::-webkit-details-marker { display: none; }
+details.faq-item summary::after {
+  content: '+';
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+}
+details.faq-item[open] summary::after {
+  transform: rotate(45deg);
+  color: var(--text-primary);
+}
+.faq-answer {
+  padding-bottom: 28px;
+  color: var(--text-secondary);
+  font-size: 15.5px;
+  line-height: 1.7;
+  max-width: 68ch;
+}
+
+/* ========================================================
+   SECÇÃO 9 — CTA FINAL
+   ======================================================== */
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding-block: clamp(100px, 15vw, 200px);
+}
+.final-cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.28;
+  filter: grayscale(100%) contrast(1.3) brightness(0.7);
+}
+.final-cta-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.final-cta-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(circle at center, rgba(5,5,5,0.6) 0%, var(--bg-deep) 85%);
+}
+.final-cta-content {
+  position: relative;
+  z-index: 3;
+  max-width: 680px;
+  margin-inline: auto;
+}
+.final-cta h2 {
+  font-size: clamp(38px, 6vw, 72px);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.final-cta p {
+  color: var(--text-secondary);
+  font-size: clamp(17px, 2vw, 22px);
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+.final-cta-price {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  letter-spacing: 0.05em;
+}
+.final-cta-price strong {
+  color: var(--text-primary);
+  font-size: 32px;
+  margin-left: 6px;
+}
+
+/* ========================================================
+   SECÇÃO 10 — FOOTER
+   ======================================================== */
+.footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-deep);
+  padding-block: 64px 40px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.footer-grid {
+  display: grid;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+@media (min-width: 768px) {
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+.footer-col h4 {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.footer-col p {
+  line-height: 1.6;
+  max-width: 40ch;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links a:hover {
+  color: var(--text-primary);
+}
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.footer-disclaimer {
+  max-width: 80ch;
+}
+
+/* Placeholder visual para produto ausente */
+.product-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-surface) 100%);
+  border: 1px dashed var(--border-strong);
+}
+.product-placeholder-device {
+  width: 140px;
+  height: 220px;
+  border: 2px solid var(--border-strong);
+  border-radius: 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgba(255,255,255,0.02);
+}
+.product-placeholder-device::after {
+  content: 'WHOOP 5.0';
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+.product-placeholder-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Animações e Reveal */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fade-up { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="film-grain" aria-hidden="true"></div>
+
+<!-- HEADER NAVEGAÇÃO -->
+<header class="header" id="navbar">
+  <div class="wrap header-inner">
+    <a href="#hero" class="brand">WHOOP<span>5.0</span></a>
+    <div class="nav-actions">
+      <span class="nav-price">Disponível em Luanda · <strong>150.000 Kz</strong></span>
+      <a class="btn btn-primary btn-sm js-wa-trigger" data-location="navbar" href="https://wa.me/244927805792?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20WHOOP%205.0%20por%20150.000%20Kz.%20Gostaria%20de%20saber%20mais%20sobre%20a%20disponibilidade%2C%20a%20subscri%C3%A7%C3%A3o%20e%20as%20condi%C3%A7%C3%B5es%20de%20entrega.">Encomendar</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ========================================================
+     SECÇÃO 1 — HERO CINEMATOGRÁFICO
+     ======================================================== -->
+<section id="hero" class="hero">
+  <div class="hero-media">
+    <img src="HERO_IMG" alt="Marginal de Luanda — Performance ao ar livre" class="hero-media-bg">
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="wrap hero-content">
+    <span class="kicker fade-up">WHOOP 5.0 · Angola</span>
+    <h1 class="fade-up">O teu corpo tem mais para dar.</h1>
+    <div class="hero-sub fade-up">Conhece-o melhor.</div>
+    <p class="hero-text fade-up">
+      O WHOOP 5.0 ajuda-te a compreender os teus padrões de sono, recuperação e esforço físico, para que possas tomar decisões mais conscientes sobre o teu desempenho.
+    </p>
+    <div class="hero-meta fade-up">
+      <div class="hero-price"><span>Kz</span>150.000</div>
+      <div class="hero-note">1 mês de subscrição incluído</div>
+    </div>
+    <div class="hero-actions fade-up">
+      <a class="btn btn-primary js-wa-trigger" data-location="hero_primary" href="https://wa.me/244927805792?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20WHOOP%205.0%20por%20150.000%20Kz.%20Gostaria%20de%20saber%20mais%20sobre%20a%20disponibilidade%2C%20a%20subscri%C3%A7%C3%A3o%20e%20as%20condi%C3%A7%C3%B5es%20de%20entrega.">Encomendar pelo WhatsApp</a>
+      <a class="btn btn-secondary js-scroll-trigger" href="#filosofia">Descobrir o WHOOP</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 2 — O CORPO PARA ALÉM DO ESFORÇO
+     ======================================================== -->
+<section id="filosofia" class="transition-sec">
+  <div class="wrap transition-grid">
+    <div class="transition-text fade-up">
+      <span class="kicker">Filosofia</span>
+      <h2>O desempenho não começa quando treinas.</h2>
+      <p>Começa na forma como descansas, recuperas e compreendes o teu corpo.</p>
+    </div>
+    <div class="transition-visual fade-up">
+      <img src="ATHLETE_ANGOLA_IMG" alt="Atleta em prova de corrida de estrada em Angola">
+      <div class="visual-caption">Superação & Recuperação · Atleta em Angola</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 3 — TRÊS DIMENSÕES DO DESEMPENHO
+     ======================================================== -->
+<section id="dimensoes">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <span class="kicker">Pilares Fundamentais</span>
+      <h2>Três dimensões do desempenho humano.</h2>
+      <p>O equilíbrio diário medido de forma contínua, sem intromissão e sem ecrãs no teu pulso.</p>
+    </div>
+
+    <div class="dimensions-grid">
+      <!-- SONO -->
+      <article class="dim-card fade-up">
+        <div class="dim-media">
+          <img src="REAL_SLEEP_RING_IMG" alt="Métricas Reais de Sono WHOOP (8:40 Hours of Sleep)">
+        </div>
+        <div class="dim-content">
+          <span class="dim-number">01 / SONO</span>
+          <div class="dim-body">
+            <h3>Descobre os teus padrões de descanso.</h3>
+            <p>Acompanha sono leve, profundo e REM para compreenderes a qualidade real do teu repouso.</p>
+            <div class="dim-bar"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- RECUPERAÇÃO -->
+      <article class="dim-card fade-up">
+        <div class="dim-media">
+          <img src="REAL_REC_RING_IMG" alt="Anel Real de Recuperação WHOOP (73% Recovery Verde)">
+        </div>
+        <div class="dim-content">
+          <span class="dim-number">02 / RECUPERAÇÃO</span>
+          <div class="dim-body">
+            <h3>Compreende como recuperas.</h3>
+            <p>Um anel de 0 a 100% que avalia a prontidão do coração antes de iniciares qualquer treino.</p>
+            <div class="dim-bar"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ESFORÇO -->
+      <article class="dim-card fade-up">
+        <div class="dim-media">
+          <img src="REAL_STRAIN_RING_IMG" alt="Medição Real de Day Strain WHOOP (20.1 Esforço)">
+        </div>
+        <div class="dim-content">
+          <span class="dim-number">03 / ESFORÇO</span>
+          <div class="dim-body">
+            <h3>Conhece o esforço que fazes.</h3>
+            <p>Mede a intensidade e a carga cardiovascular ao longo do dia numa escala rigorosa de 0 a 21.</p>
+            <div class="dim-bar"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 4 — A TECNOLOGIA NO TEU PULSO
+     ======================================================== -->
+<section id="tecnologia" class="tech-sec">
+  <div class="wrap tech-showcase">
+    <div class="whoop-carousel-container fade-up">
+      <div class="whoop-carousel" id="whoopCarousel">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Slide 1: WHOOP 5.0 Onyx Pro -->
+          <div class="carousel-slide" data-color="WHOOP 5.0 Onyx" data-desc="Vista Oficial de Estúdio">
+            <img src="WHOOP_STUDIO_588_IMG" alt="WHOOP 5.0 Onyx Black Oficial">
+          </div>
+          <!-- Slide 2: Detalhe do Sensor e Fivela W -->
+          <div class="carousel-slide" data-color="Sensor & Fivela" data-desc="Gravação W e Acabamento Premium">
+            <img src="WHOOP_STUDIO_589_IMG" alt="Detalhe do Sensor WHOOP 5.0">
+          </div>
+          <!-- Slide 3: App no Smartphone -->
+          <div class="carousel-slide" data-color="App em Tempo Real" data-desc="Sincronização Contínua com Smartphone">
+            <img src="WHOOP_APP_592_IMG" alt="Aplicação WHOOP aberta com pulseira no pulso">
+          </div>
+          <!-- Slide 4: Telemetria Fisiológica -->
+          <div class="carousel-slide" data-color="Dados & Métricas" data-desc="Monitorização Fisiológica em Treino">
+            <img src="WHOOP_WIDGET_593_IMG" alt="Atleta com dados fisiológicos da app WHOOP">
+          </div>
+        </div>
+
+        <!-- Botões de navegação lateral -->
+        <button class="carousel-btn prev" id="prevSlide" aria-label="Bracelete anterior">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="carousel-btn next" id="nextSlide" aria-label="Próxima bracelete">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+
+      <!-- Barra de controlo de cor e swatches -->
+      <div class="carousel-ui">
+        <div class="carousel-color-name" id="carouselColorLabel">
+          Onyx Black <span>· SuperKnit™</span>
+        </div>
+        <div class="color-swatches" id="colorSwatches">
+          <button class="swatch-btn active" style="background:#0a0a0a; border-color:#fff;" data-index="0" title="Onyx Pro"></button>
+          <button class="swatch-btn" style="background:#2a2a2a; border-color:#888;" data-index="1" title="Sensor & Fivela"></button>
+          <button class="swatch-btn" style="background:#1e3c72; border-color:#4a82b8;" data-index="2" title="App no Telemóvel"></button>
+          <button class="swatch-btn" style="background:#3a3a3a; border-color:#aaa;" data-index="3" title="Telemetria"></button>
+        </div>
+      </div>
+    </div>
+    <div class="tech-details fade-up">
+      <span class="kicker">O Dispositivo</span>
+      <h2>Pequeno no pulso. Presente nos teus dados.</h2>
+      <p>
+        O WHOOP 5.0 acompanha indicadores fisiológicos vitais de forma ininterrupta, transmitindo cada leitura para a aplicação WHOOP no teu smartphone.
+      </p>
+      <p>
+        Sem visor digital e sem notificações distrativas — apenas tecnologia de captura de precisão desenhada para ser usada 24 horas por dia, 7 dias por semana.
+      </p>
+      <ul class="tech-features">
+        <li><strong>Frequência</strong> Monitorização contínua 24/7</li>
+        <li><strong>Autonomia</strong> Bateria para múltiplos dias com carregamento no pulso</li>
+        <li><strong>Resistência</strong> À prova de água para treino, banho e natação</li>
+        <li><strong>Plataforma</strong> Sincronização automática com a aplicação WHOOP</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 5 — O WHOOP EM AÇÃO EM ANGOLA (3 SLOTS DE VÍDEO)
+     ======================================================== -->
+<section id="videos-angola">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <span class="kicker">Em Terreno · Angola</span>
+      <h2>O WHOOP em ação em Luanda.</h2>
+      <p>Testado no calor, na água e no asfalto da nossa cidade — vê o dispositivo em contexto real de treino e recuperação.</p>
+    </div>
+
+    <div class="videos-grid">
+      <!-- VÍDEO 1: PERFORMANCE EM MOVIMENTO (VÍDEO REAL IMG_0526) -->
+      <div class="video-card fade-up">
+        <div class="video-player-box" data-video-slot="1" id="videoSlot1">
+          <video id="playerVid1" src="assets/videos/video_01_corrida.mp4" poster="VIDEO_01_POSTER_IMG" playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          <span class="video-tag">Vídeo 01</span>
+          <button class="video-play-btn" id="playBtn1" aria-label="Reproduzir vídeo da performance"></button>
+        </div>
+        <div class="video-card-body">
+          <h3>Performance em Movimento</h3>
+          <p>O WHOOP em ação contínua — registo visual do dispositivo a acompanhar cada fração de segundo do esforço corporal.</p>
+        </div>
+      </div>
+
+      <!-- VÍDEO 2: ÁGUAS ABERTAS (VÍDEO REAL IMG_0527) -->
+      <div class="video-card fade-up">
+        <div class="video-player-box" data-video-slot="2" id="videoSlot2">
+          <video id="playerVid2" src="assets/videos/video_02_aguas.mp4" poster="VIDEO_02_POSTER_IMG" playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          <span class="video-tag">Vídeo 02</span>
+          <button class="video-play-btn" id="playBtn2" aria-label="Reproduzir vídeo de águas abertas"></button>
+        </div>
+        <div class="video-card-body">
+          <h3>Resistência em Água</h3>
+          <p>Do molhe à correnteza — o dispositivo imerso na água salgada enquanto o corpo se adapta ao esforço contínuo.</p>
+        </div>
+      </div>
+
+      <!-- VÍDEO 3: ROTINA & RECUPERAÇÃO (VÍDEO REAL IMG_0584) -->
+      <div class="video-card fade-up">
+        <div class="video-player-box" data-video-slot="3" id="videoSlot3">
+          <video id="playerVid3" src="assets/videos/video_03_rotina.mp4" poster="VIDEO_03_POSTER_IMG" playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          <span class="video-tag">Vídeo 03</span>
+          <button class="video-play-btn" id="playBtn3" aria-label="Reproduzir vídeo da rotina e recuperação"></button>
+        </div>
+        <div class="video-card-body">
+          <h3>Rotina em Equilíbrio</h3>
+          <p>Vigilância silenciosa do despertar ao descanso — o corpo lido sem interrupção, do trabalho ao momento de recuperar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 6 — A OFERTA
+     ======================================================== -->
+<section id="oferta" class="offer-sec">
+  <div class="wrap">
+    <div class="offer-box fade-up">
+      <div class="offer-head">
+        <div>
+          <span class="kicker">Disponibilidade em Luanda</span>
+          <h2>WHOOP 5.0</h2>
+        </div>
+        <div class="offer-price-tag">
+          <span>Kz</span>150.000
+        </div>
+      </div>
+
+      <div class="offer-includes">
+        <div class="offer-includes-title">O que está incluído</div>
+        <ul class="offer-list">
+          <li>Dispositivo WHOOP 5.0</li>
+          <li>1 mês de subscrição gratuita</li>
+          <li>Possibilidade de assistência na ativação</li>
+        </ul>
+      </div>
+
+      <div class="offer-notes">
+        <p>A entrega em Luanda tem um custo adicional, calculado conforme a localização.</p>
+        <p>A renovação da subscrição pode ser feita de forma independente ou com a nossa assistência, mediante pagamento.</p>
+      </div>
+
+      <div class="offer-action">
+        <a class="btn btn-primary js-wa-trigger" data-location="offer_box" href="https://wa.me/244927805792?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20WHOOP%205.0%20por%20150.000%20Kz.%20Gostaria%20de%20saber%20mais%20sobre%20a%20disponibilidade%2C%20a%20subscri%C3%A7%C3%A3o%20e%20as%20condi%C3%A7%C3%B5es%20de%20entrega.">Quero o meu WHOOP</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 7 — CONFIANÇA E QUALIDADE
+     ======================================================== -->
+<section id="confianca" class="trust-sec">
+  <div class="wrap">
+    <div class="trust-box fade-up">
+      <span class="kicker">Garantia de Verificação</span>
+      <h2>Cada detalhe importa.</h2>
+      <p>
+        Todos os dispositivos são testados antes da entrega, para que possas receber o teu WHOOP com a devida verificação. As condições de compra, pagamento e entrega são confirmadas diretamente durante o atendimento individual no WhatsApp.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 8 — PERGUNTAS FREQUENTES (FAQ)
+     ======================================================== -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <span class="kicker">Dúvidas Comuns</span>
+      <h2>Perguntas frequentes.</h2>
+      <p>Esclarecimentos transparentes sobre as condições comerciais e operacionais.</p>
+    </div>
+
+    <div class="faq-list">
+      <!-- 1 -->
+      <details class="faq-item fade-up">
+        <summary>O que está incluído no preço?</summary>
+        <div class="faq-answer">
+          O valor de 150.000 Kz inclui o dispositivo WHOOP 5.0, 1 mês de subscrição gratuita na plataforma WHOOP e a possibilidade de assistência na ativação inicial.
+        </div>
+      </details>
+
+      <!-- 2 -->
+      <details class="faq-item fade-up">
+        <summary>Como funciona a subscrição gratuita?</summary>
+        <div class="faq-answer">
+          O dispositivo é entregue com 1 mês de acesso gratuito aos serviços e métricas da aplicação WHOOP, permitindo usufruir de todas as funcionalidades de monitorização desde o primeiro dia.
+        </div>
+      </details>
+
+      <!-- 3 -->
+      <details class="faq-item fade-up">
+        <summary>Como funciona a renovação da subscrição?</summary>
+        <div class="faq-answer">
+          Após o primeiro mês gratuito, a renovação da subscrição pode ser realizada diretamente por ti na plataforma ou com a nossa assistência, mediante o pagamento correspondente.
+        </div>
+      </details>
+
+      <!-- 4 -->
+      <details class="faq-item fade-up">
+        <summary>Como posso ativar o meu WHOOP?</summary>
+        <div class="faq-answer">
+          Podes efetuar a ativação de forma independente através da aplicação WHOOP ou solicitar a assistência da nossa equipa durante o processo de configuração.
+        </div>
+      </details>
+
+      <!-- 5 -->
+      <details class="faq-item fade-up">
+        <summary>Como funciona a entrega em Luanda?</summary>
+        <div class="faq-answer">
+          A entrega é efetuada em Luanda e tem um custo adicional, calculado de acordo com a tua localização exata. Os prazos e detalhes são acordados no momento da conversa pelo WhatsApp.
+        </div>
+      </details>
+
+      <!-- 6 -->
+      <details class="faq-item fade-up">
+        <summary>Como posso efetuar o pagamento?</summary>
+        <div class="faq-answer">
+          O método e as condições de pagamento são combinados individualmente durante o atendimento no WhatsApp, garantindo clareza e conveniência para ambas as partes.
+        </div>
+      </details>
+
+      <!-- 7 -->
+      <details class="faq-item fade-up">
+        <summary>O produto é testado antes da entrega?</summary>
+        <div class="faq-answer">
+          Sim. Todos os dispositivos passam por um teste de verificação prévio antes de serem entregues ao cliente.
+        </div>
+      </details>
+
+      <!-- 8 -->
+      <details class="faq-item fade-up">
+        <summary>O que acontece se surgir algum problema após a compra?</summary>
+        <div class="faq-answer">
+          Se surgir qualquer questão ou anomalia após a entrega, a situação será analisada individualmente pela nossa equipa, em total respeito pelas condições previamente acordadas no ato da compra.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECÇÃO 9 — CTA FINAL
+     ======================================================== -->
+<section id="cta-final" class="final-cta">
+  <div class="final-cta-bg">
+    <img src="HERO_IMG" alt="Marginal de Luanda">
+  </div>
+  <div class="final-cta-overlay"></div>
+  <div class="wrap final-cta-content">
+    <span class="kicker fade-up">Decisão</span>
+    <h2 class="fade-up">O próximo passo é teu.</h2>
+    <p class="fade-up">Começa a compreender melhor o teu corpo com o WHOOP 5.0.</p>
+    <div class="final-cta-price fade-up">
+      Investimento único: <strong>150.000 Kz</strong>
+    </div>
+    <div class="fade-up">
+      <a class="btn btn-primary js-wa-trigger" data-location="final_cta" href="https://wa.me/244927805792?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20WHOOP%205.0%20por%20150.000%20Kz.%20Gostaria%20de%20saber%20mais%20sobre%20a%20disponibilidade%2C%20a%20subscri%C3%A7%C3%A3o%20e%20as%20condi%C3%A7%C3%B5es%20de%20entrega.">Encomendar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================================================
+     SECÇÃO 10 — FOOTER
+     ======================================================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom: 14px;">WHOOP<span>5.0</span></div>
+        <p>Comercialização independente do WHOOP 5.0 em Angola. Tecnologia vestível de alta precisão para monitorização contínua de sono, recuperação e esforço físico.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul class="footer-links">
+          <li><a href="#filosofia">Filosofia</a></li>
+          <li><a href="#dimensoes">Dimensões</a></li>
+          <li><a href="#tecnologia">Tecnologia</a></li>
+          <li><a href="#perfis">Perfis</a></li>
+          <li><a href="#oferta">A Oferta</a></li>
+          <li><a href="#faq">Perguntas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto & Atendimento</h4>
+        <ul class="footer-links">
+          <li><a class="js-wa-trigger" data-location="footer_link" href="https://wa.me/244927805792?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20WHOOP%205.0%20por%20150.000%20Kz.%20Gostaria%20de%20saber%20mais%20sobre%20a%20disponibilidade%2C%20a%20subscri%C3%A7%C3%A3o%20e%20as%20condi%C3%A7%C3%B5es%20de%20entrega.">Atendimento via WhatsApp</a></li>
+          <li><span style="color: var(--text-muted);">Condições confirmadas no atendimento</span></li>
+          <li><a href="#faq">Política de Entrega & Garantia</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-disclaimer">
+        WHOOP é uma marca comercial registada dos seus respetivos titulares. Esta é uma página de comercialização e divulgação independente em Angola, não constituindo representação oficial autorizada da marca WHOOP, Inc.
+      </div>
+      <div>&copy; 2026 Todos os direitos reservados.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================================
+     JAVASCRIPT: CONFIGURAÇÃO WHATSAPP & CRO ANALYTICS
+     ======================================================== -->
+<script>
+(function() {
+  'use strict';
+
+  /* ========================================================
+     CONFIGURAÇÃO CENTRALIZADA (Requisito FASE 2 / CRO)
+     ======================================================== */
+  var CONFIG = {
+    // Número centralizado (conforme instrução humana mantida)
+    WHATSAPP_NUMBER: '244927805792',
+
+    // Mensagem pré-preenchida exata do brief
+    PREFILLED_MESSAGE: 'Olá! Tenho interesse no WHOOP 5.0 por 150.000 Kz. Gostaria de saber mais sobre a disponibilidade, a subscrição e as condições de entrega.'
+  };
+
+  /* Helper para construir URL segura do WhatsApp */
+  function buildWhatsAppUrl(customLocation) {
+    if (!CONFIG.WHATSAPP_NUMBER) {
+      console.warn('[CRO Tracking] WHATSAPP_NUMBER não configurado.');
+      return '#';
+    }
+    var msg = CONFIG.PREFILLED_MESSAGE;
+    return 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+  }
+
+  /* ========================================================
+     ANALYTICS & CRO HOOKS (Requisito 9)
+     Prepara a estrutura para ferramentas futuras (Meta Pixel, GA4, etc.)
+     ======================================================== */
+  window.trackEvent = function(eventName, eventParams) {
+    var payload = {
+      event: eventName,
+      timestamp: new Date().toISOString(),
+      params: eventParams || {}
+    };
+
+    // Log interno legível
+    if (window.console && console.log) {
+      console.log('[Analytics Hook]', payload);
+    }
+
+    // Se existir dataLayer (Google Tag Manager) ou fbq (Meta Pixel), envia
+    if (window.dataLayer && Array.isArray(window.dataLayer)) {
+      window.dataLayer.push(payload);
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', eventName, eventParams);
+    }
+  };
+
+  // Disparo: Visualização da landing page
+  window.trackEvent('page_view', { page: 'whoop_5_angola_cinematic' });
+
+  // Inicializar todos os links de WhatsApp centralizadamente
+  document.querySelectorAll('.js-wa-trigger').forEach(function(el) {
+    var loc = el.getAttribute('data-location') || 'unknown';
+    el.setAttribute('href', buildWhatsAppUrl(loc));
+    el.setAttribute('target', '_blank');
+    el.setAttribute('rel', 'noopener noreferrer');
+
+    el.addEventListener('click', function() {
+      window.trackEvent('whatsapp_click', {
+        location: loc,
+        price: '150.000 Kz',
+        product: 'WHOOP 5.0'
+      });
+      if (loc.indexOf('hero') !== -1 || loc.indexOf('offer') !== -1 || loc.indexOf('final') !== -1) {
+        window.trackEvent('primary_cta_click', { location: loc });
+      }
+    });
+  });
+
+  // Disparo: Clique no CTA Secundário (Descobrir o WHOOP)
+  document.querySelectorAll('.js-scroll-trigger').forEach(function(el) {
+    el.addEventListener('click', function() {
+      window.trackEvent('secondary_cta_click', { target: el.getAttribute('href') });
+    });
+  });
+
+  // Disparo: Interação com a FAQ
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    item.addEventListener('toggle', function() {
+      if (item.open) {
+        var summaryText = (item.querySelector('summary') || {}).textContent || '';
+        window.trackEvent('faq_interaction', { question: summaryText.trim() });
+      }
+    });
+  });
+
+  /* ========================================================
+     UI / COMPORTAMENTO CINEMATOGRÁFICO
+     ======================================================== */
+  
+  /* ========================================================
+     LÓGICA DO CARROSSEL DE CORES DO WHOOP
+     ======================================================== */
+  var track = document.getElementById('carouselTrack');
+  var slides = document.querySelectorAll('.carousel-slide');
+  var prevBtn = document.getElementById('prevSlide');
+  var nextBtn = document.getElementById('nextSlide');
+  var colorLabel = document.getElementById('carouselColorLabel');
+  var swatches = document.querySelectorAll('.swatch-btn');
+  var currentIndex = 0;
+
+  function updateCarousel(index) {
+    if (!track || slides.length === 0) return;
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    currentIndex = index;
+
+    track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+    var curSlide = slides[currentIndex];
+    var cName = curSlide.getAttribute('data-color') || '';
+    var cDesc = curSlide.getAttribute('data-desc') || '';
+    if (colorLabel) {
+      colorLabel.innerHTML = cName + ' <span>· ' + cDesc + '</span>';
+    }
+
+    swatches.forEach(function(s, idx) {
+      if (idx === currentIndex) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+
+    if (window.trackEvent) {
+      window.trackEvent('carousel_color_change', { color: cName, index: currentIndex });
+    }
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      updateCarousel(currentIndex - 1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      updateCarousel(currentIndex + 1);
+    });
+  }
+  swatches.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var idx = parseInt(btn.getAttribute('data-index'), 10);
+      updateCarousel(idx);
+    });
+  });
+
+  // Suporte a swipe em mobile
+  var startX = 0;
+  var carouselEl = document.getElementById('whoopCarousel');
+  if (carouselEl) {
+    carouselEl.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    carouselEl.addEventListener('touchend', function(e) {
+      var diffX = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diffX) > 40) {
+        if (diffX > 0) updateCarousel(currentIndex - 1);
+        else updateCarousel(currentIndex + 1);
+      }
+    }, { passive: true });
+  }
+
+  
+  // Reprodução interativa do Vídeo 1 (IMG_0526)
+  var vid1 = document.getElementById('playerVid1');
+  var playBtn1 = document.getElementById('playBtn1');
+  var box1 = document.getElementById('videoSlot1');
+  if (vid1 && playBtn1) {
+    function togglePlay() {
+      if (vid1.paused) {
+        vid1.play().then(function() {
+          playBtn1.style.opacity = '0';
+          playBtn1.style.pointerEvents = 'none';
+        }).catch(function(e) { console.log('Autoplay bloqueado:', e); });
+      } else {
+        vid1.pause();
+        playBtn1.style.opacity = '1';
+        playBtn1.style.pointerEvents = 'auto';
+      }
+    }
+    playBtn1.addEventListener('click', function(e) {
+      e.stopPropagation();
+      togglePlay();
+    });
+    box1.addEventListener('click', togglePlay);
+    vid1.addEventListener('play', function() { playBtn1.style.opacity = '0'; });
+    vid1.addEventListener('pause', function() { playBtn1.style.opacity = '1'; });
+  }
+
+  // Reprodução interativa do Vídeo 2 (IMG_0527)
+  var vid2 = document.getElementById('playerVid2');
+  var playBtn2 = document.getElementById('playBtn2');
+  var box2 = document.getElementById('videoSlot2');
+  if (vid2 && playBtn2) {
+    function togglePlay2() {
+      if (vid2.paused) {
+        vid2.play().then(function() {
+          playBtn2.style.opacity = '0';
+          playBtn2.style.pointerEvents = 'none';
+        }).catch(function(e) { console.log('Autoplay bloqueado:', e); });
+      } else {
+        vid2.pause();
+        playBtn2.style.opacity = '1';
+        playBtn2.style.pointerEvents = 'auto';
+      }
+    }
+    playBtn2.addEventListener('click', function(e) {
+      e.stopPropagation();
+      togglePlay2();
+    });
+    box2.addEventListener('click', togglePlay2);
+    vid2.addEventListener('play', function() { playBtn2.style.opacity = '0'; });
+    vid2.addEventListener('pause', function() { playBtn2.style.opacity = '1'; });
+  }
+
+  // Reprodução interativa do Vídeo 3 (IMG_0584)
+  var vid3 = document.getElementById('playerVid3');
+  var playBtn3 = document.getElementById('playBtn3');
+  var box3 = document.getElementById('videoSlot3');
+  if (vid3 && playBtn3) {
+    function togglePlay3() {
+      if (vid3.paused) {
+        vid3.play().then(function() {
+          playBtn3.style.opacity = '0';
+          playBtn3.style.pointerEvents = 'none';
+        }).catch(function(e) { console.log('Autoplay bloqueado:', e); });
+      } else {
+        vid3.pause();
+        playBtn3.style.opacity = '1';
+        playBtn3.style.pointerEvents = 'auto';
+      }
+    }
+    playBtn3.addEventListener('click', function(e) {
+      e.stopPropagation();
+      togglePlay3();
+    });
+    box3.addEventListener('click', togglePlay3);
+    vid3.addEventListener('play', function() { playBtn3.style.opacity = '0'; });
+    vid3.addEventListener('pause', function() { playBtn3.style.opacity = '1'; });
+  }
+
+  // Header com blur ao fazer scroll
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Animação de entrada suave (Reveal)
+  var reveals = document.querySelectorAll('.fade-up');
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(function(r) { observer.observe(r); });
+
+    // Fallback de segurança para garantir legibilidade absoluta
+    setTimeout(function() {
+      reveals.forEach(function(r) { r.classList.add('in'); });
+    }, 1200);
+  } else {
+    reveals.forEach(function(r) { r.classList.add('in'); });
+  }
+
+})();
+</script>
+</body>
+</html>

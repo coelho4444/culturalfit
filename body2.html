@@ -1,0 +1,343 @@
+<!-- ============ SIMULADOR ============ -->
+<section id="simulador">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">Simulador · idade biológica</p>
+      <h2 class="sec">Que idade tem<br><em>o teu corpo</em> agora?</h2>
+      <p class="lede">Muitos angolanos com 35 anos carregam um corpo de 41. Mexe nas três alavancas que mais pesam — sono, stress e treino — e vê como isso muda o teu número. É uma estimativa, não um diagnóstico médico.</p>
+    </div>
+
+    <div class="sim rv">
+      <div class="sim-l">
+        <div class="ctl">
+          <div class="ctl-head">
+            <label class="ctl-l" for="sAge">A tua idade real</label>
+            <span class="ctl-v" id="sAgeV">35 anos</span>
+          </div>
+          <input type="range" id="sAge" min="18" max="70" step="1" value="35">
+          <div class="ctl-hint"><span>18</span><span>70</span></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head">
+            <label class="ctl-l" for="sSleep">Horas dormidas por noite</label>
+            <span class="ctl-v" id="sSleepV">7h30</span>
+          </div>
+          <input type="range" id="sSleep" min="4" max="10" step="0.25" value="7.5">
+          <div class="ctl-hint"><span>4h</span><span>10h</span></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head">
+            <label class="ctl-l" for="sStress">Nível de stress diário</label>
+            <span class="ctl-v" id="sStressV">Médio</span>
+          </div>
+          <input type="range" id="sStress" min="0" max="100" step="1" value="50">
+          <div class="ctl-hint"><span>Calmo</span><span>Queimado</span></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head">
+            <label class="ctl-l" for="sTrain">Treino por semana</label>
+            <span class="ctl-v" id="sTrainV">3 vezes</span>
+          </div>
+          <input type="range" id="sTrain" min="0" max="7" step="1" value="3">
+          <div class="ctl-hint"><span>Nada</span><span>Todos os dias</span></div>
+        </div>
+      </div>
+
+      <div class="sim-r">
+        <p class="kicker">Idade biológica estimada</p>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:10px">
+          <span class="age-out" id="ageOut">38</span>
+          <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--bone-3)">ANOS</span>
+        </div>
+        <p class="age-cap" id="ageCap">O teu corpo está a envelhecer mais rápido do que tu</p>
+        <div class="age-delta" id="ageDelta">+3 anos face à tua idade real</div>
+
+        <div class="mbars" style="margin-top:28px">
+          <div class="mbar">
+            <span class="mbar-l">Sono</span>
+            <span class="mbar-t"><span class="mbar-f" id="bSleep" style="width:75%;background:var(--rec)"></span></span>
+            <span class="mbar-v" id="vSleep">75</span>
+          </div>
+          <div class="mbar">
+            <span class="mbar-l">Stress</span>
+            <span class="mbar-t"><span class="mbar-f" id="bStress" style="width:50%;background:var(--rec)"></span></span>
+            <span class="mbar-v" id="vStress">50</span>
+          </div>
+          <div class="mbar">
+            <span class="mbar-l">Treino</span>
+            <span class="mbar-t"><span class="mbar-f" id="bTrain" style="width:43%;background:var(--rec)"></span></span>
+            <span class="mbar-v" id="vTrain">43</span>
+          </div>
+        </div>
+
+        <p class="age-note" id="ageNote">Cada hora de sono abaixo de sete custa-te, em média, meio ano de idade biológica. O WHOOP mede isto todas as noites no teu pulso — em vez de estimar por hábitos, mede o que o teu corpo realmente fez.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARATIVO ============ -->
+<section id="comparativo">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">Comparação honesta</p>
+      <h2 class="sec">Onde o WHOOP<br><em>se separa</em> dos outros</h2>
+      <p class="lede">Um smartwatch foi desenhado para te dar informação na rua. O WHOOP foi desenhado para te dar decisões sobre o teu corpo. São objectivos diferentes.</p>
+    </div>
+
+    <div class="tbl-scroll rv">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col">Capacidade</th>
+            <th scope="col" class="hl">WHOOP 5.0</th>
+            <th scope="col">Smartwatch comum</th>
+            <th scope="col">Relógio de treino</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Mede sono profundo e REM</th><td class="hl"><span class="t-y">Sim, por fase</span></td><td><span class="t-n">Aproximado</span></td><td><span class="t-n">Parcial</span></td></tr>
+          <tr><th scope="row">Leitura contínua 24/7</th><td class="hl"><span class="t-y">26× por segundo</span></td><td><span class="t-n">Intervalos</span></td><td><span class="t-n">Só em treino</span></td></tr>
+          <tr><th scope="row">Carga de esforço (0–21)</th><td class="hl"><span class="t-y">Sim</span></td><td><span class="t-n">Não</span></td><td><span class="t-n">Versão simples</span></td></tr>
+          <tr><th scope="row">Recuperação diária com recomendação</th><td class="hl"><span class="t-y">Sim</span></td><td><span class="t-n">Não</span></td><td><span class="t-n">Não</span></td></tr>
+          <tr><th scope="row">Idade biológica (WHOOP Age)</th><td class="hl"><span class="t-y">Sim</span></td><td><span class="t-n">Não</span></td><td><span class="t-n">Não</span></td></tr>
+          <tr><th scope="row">ECG com aval FDA</th><td class="hl"><span class="t-y">Plano Life</span></td><td><span class="t-n">Alguns modelos</span></td><td><span class="t-n">Não</span></td></tr>
+          <tr><th scope="row">Autonomia de bateria</th><td class="hl"><span class="t-y">14 dias</span></td><td><span class="t-n">1 a 2 dias</span></td><td><span class="t-n">7 a 20 dias</span></td></tr>
+          <tr><th scope="row">Notificações e apps</th><td class="hl"><span class="t-n">Nenhuma, por opção</span></td><td><span class="t-y">Todas</span></td><td><span class="t-y">Algumas</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTEMUNHOS ============ -->
+<section id="testemunhos">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">Quem já mede</p>
+      <h2 class="sec">O que muda quando<br><em>passas a ter dados</em></h2>
+      <p class="lede">Seis relatos de quem começou a medir em Luanda e não voltou a adivinhar.</p>
+    </div>
+
+    <div class="tsts">
+      <article class="tst rv">
+        <p class="tst-q">Dormia oito horas e acordava arrasado. Descobri que só fazia quatro horas de recuperação real. Antecipei o jantar e mudei o quarto. Em três semanas a diferença foi brutal.</p>
+        <div class="tst-who">
+          <div class="tst-av">NM</div>
+          <div><div class="tst-n">Nelson Mateus</div><div class="tst-m">41 anos · Talatona</div></div>
+        </div>
+      </article>
+
+      <article class="tst rv">
+        <p class="tst-q">Treino atletas no Kilamba e o WHOOP mudou a forma como leio cada um. Vejo quando um atleta está a acumular carga antes de ele me dizer que dói.</p>
+        <div class="tst-who">
+          <div class="tst-av">AJS</div>
+          <div><div class="tst-n">Ana Júlia Santos</div><div class="tst-m">33 anos · Preparadora física</div></div>
+        </div>
+      </article>
+
+      <article class="tst rv">
+        <p class="tst-q">Sou engenheiro, passo o dia sentado e em reunião. O WHOOP mostrou-me seis picos de stress por dia que eu nem sentia. Aprendi a respirar antes de explodir.</p>
+        <div class="tst-who">
+          <div class="tst-av">PD</div>
+          <div><div class="tst-n">Paulo Domingos</div><div class="tst-m">38 anos · Miramar</div></div>
+        </div>
+      </article>
+
+      <article class="tst rv">
+        <p class="tst-q">A minha idade biológica veio seis anos acima da real. Assustou-me. Em cinco meses a corrigir sono e a caminhar na Ilha, baixei quatro. Vale cada kwanza.</p>
+        <div class="tst-who">
+          <div class="tst-av">LC</div>
+          <div><div class="tst-n">Luísa Cabral</div><div class="tst-m">47 anos · Benguela</div></div>
+        </div>
+      </article>
+
+      <article class="tst rv">
+        <p class="tst-q">Corro na Marginal todos os dias. Antes corria sempre no mesmo ritmo. Agora o WHOOP diz-me se o corpo aguenta ou se é dia de caminhada. Zero lesões em oito meses.</p>
+        <div class="tst-who">
+          <div class="tst-av">MF</div>
+          <div><div class="tst-n">Mário Fernandes</div><div class="tst-m">29 anos · Corredor · Marginal</div></div>
+        </div>
+      </article>
+
+      <article class="tst rv">
+        <p class="tst-q">Comprei o plano Life pelo ECG. O meu pai teve arritmia e ninguém viu a tempo. Agora vigio o meu ritmo cardíaco todas as semanas. É paz de espírito.</p>
+        <div class="tst-who">
+          <div class="tst-av">TR</div>
+          <div><div class="tst-n">Teresa Rebelo</div><div class="tst-m">52 anos · Luanda Sul</div></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANOS ============ -->
+<section id="planos">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">Planos em kwanzas</p>
+      <h2 class="sec">A pulseira vem<br><em>incluída no plano</em></h2>
+      <p class="lede">Não compras o aparelho à parte. Escolhes o plano anual e a pulseira WHOOP 5.0 chega a Luanda em 24 horas, dentro do preço. Sem custo inicial de equipamento.</p>
+    </div>
+
+    <div class="plans">
+      <article class="plan rv">
+        <div class="plan-name">One</div>
+        <div class="plan-price">
+          <span class="plan-cur">Kz</span>
+          <span class="plan-num">45.000</span>
+          <span class="plan-per">/mês</span>
+        </div>
+        <p class="plan-desc">Para quem quer começar a medir o essencial</p>
+        <ul>
+          <li>Pulseira WHOOP 5.0 incluída</li>
+          <li>Sono por fases (leve, profundo, REM)</li>
+          <li>Recuperação diária</li>
+          <li>Carga de esforço 0–21</li>
+          <li>App WHOOP completo</li>
+          <li>Bateria de 14 dias</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/244927805792?text=Ol%C3%A1%2C%20quero%20o%20plano%20WHOOP%20One%20(45.000%20Kz%2Fm%C3%AAs)">Quero o One</a>
+        <p class="plan-note">Pagamento mensal cancelável</p>
+      </article>
+
+      <article class="plan feat rv">
+        <span class="plan-badge">Mais escolhido</span>
+        <div class="plan-name">Peak</div>
+        <div class="plan-price">
+          <span class="plan-cur">Kz</span>
+          <span class="plan-num">68.000</span>
+          <span class="plan-per">/mês</span>
+        </div>
+        <p class="plan-desc">O plano para quem treina a sério e quer evoluir</p>
+        <ul>
+          <li>Tudo do plano One</li>
+          <li>WHOOP Age · idade biológica</li>
+          <li>Monitor de stress em tempo real</li>
+          <li>Healthspan e tendências longas</li>
+          <li>Treinador de força no app</li>
+          <li>Coaching inteligente diário</li>
+          <li>Apoio prioritário no WhatsApp</li>
+        </ul>
+        <a class="btn btn-main" href="https://wa.me/244927805792?text=Ol%C3%A1%2C%20quero%20o%20plano%20WHOOP%20Peak%20(68.000%20Kz%2Fm%C3%AAs)">Quero o Peak</a>
+        <p class="plan-note">O mais recomendado para Luanda</p>
+      </article>
+
+      <article class="plan rv">
+        <div class="plan-name">Life</div>
+        <div class="plan-price">
+          <span class="plan-cur">Kz</span>
+          <span class="plan-num">95.000</span>
+          <span class="plan-per">/mês</span>
+        </div>
+        <p class="plan-desc">Saúde com nível médico, para quem quer vigiar</p>
+        <ul>
+          <li>Tudo do plano Peak</li>
+          <li>Pulseira WHOOP MG com grau médico</li>
+          <li>ECG com aval da FDA</li>
+          <li>Detecção de ritmo irregular (AFib)</li>
+          <li>Tendência de pressão arterial</li>
+          <li>Bateria extra sem fios</li>
+          <li>Acompanhamento dedicado</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/244927805792?text=Ol%C3%A1%2C%20quero%20o%20plano%20WHOOP%20Life%20(95.000%20Kz%2Fm%C3%AAs)">Quero o Life</a>
+        <p class="plan-note">Inclui pulseira MG</p>
+      </article>
+    </div>
+    <p class="plan-note" style="margin-top:18px;text-align:left">Preços de referência em kwanzas, sujeitos à taxa do dia e a disponibilidade de stock. Confirma o valor final na conversa de WhatsApp antes de pagar.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">Perguntas frequentes</p>
+      <h2 class="sec">O que costumam<br><em>perguntar primeiro</em></h2>
+    </div>
+
+    <div class="faq rv">
+      <details open>
+        <summary>Como recebo em Luanda e quanto tempo demora?</summary>
+        <p>Entregamos em Luanda, Talatona, Kilamba, Luanda Sul e Benguela em até 24 horas após confirmação do pagamento. Para outras províncias, combinamos o envio por transportadora e o prazo é confirmado na conversa de WhatsApp.</p>
+      </details>
+      <details>
+        <summary>A pulseira é comprada à parte?</summary>
+        <p>Não. A pulseira WHOOP 5.0 está incluída no plano anual — é assim que a WHOOP funciona em todo o mundo. Só o plano Life inclui a versão MG, com grau médico. Não há custo inicial de equipamento.</p>
+      </details>
+      <details>
+        <summary>Preciso de telemóvel para usar?</summary>
+        <p>Sim. O WHOOP não tem ecrã: recolhe tudo na pulseira e mostra no telemóvel, na app, por Bluetooth. Funciona com iPhone e Android. Podes deixar o telefone em casa a treinar — a pulseira guarda os dados e sincroniza depois.</p>
+      </details>
+      <details>
+        <summary>Serve para quem não faz desporto?</summary>
+        <p>Serve sobretudo para quem não faz. Sono, recuperação e stress funcionam com qualquer pessoa, e são exactamente as áreas onde quem tem uma rotina de escritório ganha mais. A maioria dos nossos clientes em Luanda não é atleta.</p>
+      </details>
+      <details>
+        <summary>Os dados de saúde são meus?</summary>
+        <p>Os dados ficam na tua conta WHOOP e a app permite exportar o histórico. Não são partilhados com terceiros sem o teu consentimento. Nós, como revendedores, não temos acesso aos teus dados de saúde em momento algum.</p>
+      </details>
+      <details>
+        <summary>E se não me adaptar?</summary>
+        <p>Falamos com honestidade: o WHOOP pede duas a três semanas de uso contínuo antes de as leituras ficarem fiáveis — os primeiros dias servem para calibrar a tua linha de base. Se ao fim desse período sentires que não te acrescenta, contacta-nos e resolvemos.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section id="encomendar">
+  <div class="wrap">
+    <div class="final rv">
+      <div class="final-photo" aria-hidden="true"><img src="MARGINAL_IMG" alt=""></div>
+      <div class="final-in">
+        <p class="eyebrow">Encomendar</p>
+        <h2>Está na hora de ouvir<br>o que o teu corpo diz.</h2>
+        <p>Cada noite mal dormida, cada treino que não rende, cada cansaço sem explicação — tem uma razão. Fala comigo no WhatsApp e digo-te em dois minutos qual plano faz sentido para o teu caso.</p>
+        <div class="final-actions">
+          <a class="btn btn-wa" href="https://wa.me/244927805792?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20do%20WHOOP%205.0%20e%20quero%20saber%20mais">Falar no WhatsApp</a>
+          <a class="btn btn-ghost" href="tel:+244927805792">Ligar: 927 805 792</a>
+        </div>
+        <div class="assure">
+          <div>Entrega em 24h em Luanda</div>
+          <div>Pulseira incluída no plano</div>
+          <div>Sem custo inicial de equipamento</div>
+          <div>Apoio em português, no WhatsApp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div class="foot-brand">WHOOP<i>AO</i></div>
+    <div class="foot-grid">
+      <div class="foot-c">
+        <strong>Contacto directo</strong>
+        <a href="https://wa.me/244927805792">WhatsApp: 927 805 792</a>
+        <a href="tel:+244927805792">Chamada: +244 927 805 792</a>
+      </div>
+      <div class="foot-c">
+        <strong>Entrega</strong>
+        <span>Luanda e Talatona · 24h</span>
+        <span>Kilamba e Luanda Sul · 24h</span>
+        <span>Benguela e outras províncias · combinado</span>
+      </div>
+      <div class="foot-c">
+        <strong>Ir para</strong>
+        <a href="#tecnologia">A tecnologia</a>
+        <a href="#simulador">Simulador</a>
+        <a href="#planos">Planos</a>
+        <a href="#faq">Perguntas</a>
+      </div>
+    </div>
+    <p class="foot-legal">
+      Página independente de venda e divulgação, mantida por um revendedor em Angola. Não somos a WHOOP, Inc. nem representamos oficialmente a marca. WHOOP é uma marca registada dos seus titulares. Os valores em kwanzas são de referência, sujeitos à taxa de câmbio do dia e à disponibilidade de stock, e são confirmados por WhatsApp antes de qualquer pagamento. O WHOOP não é um dispositivo médico de diagnóstico e não substitui consulta nem acompanhamento clínico; as estimativas de idade biológica apresentadas nesta página são ilustrativas.
+    </p>
+  </div>
+</footer>
