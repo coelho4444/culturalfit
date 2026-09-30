@@ -4,7 +4,7 @@ def b64(path):
     return 'data:image/jpeg;base64,' + base64.b64encode(open(path, 'rb').read()).decode()
 
 # Fundo 4K e atleta angolano
-HERO_4K        = b64('/home/coelho/whoop-luanda/assets/luanda-hd/marginal-promenade-4k.jpg')
+HERO_4K        = b64('/home/coelho/whoop-luanda/assets/luanda-hd/marginal-promenade-opt.jpg')
 ATHLETE_ANGOLA = b64('/home/coelho/whoop-luanda/assets/athlete-angola.jpg')
 
 # 3 Anéis reais da App WHOOP (extraídos de IMG_0591)
@@ -24,8 +24,6 @@ VIDEO_02_POSTER = b64('/home/coelho/whoop-luanda/assets/videos/video_02_poster.j
 VIDEO_03_POSTER = b64('/home/coelho/whoop-luanda/assets/videos/video_03_poster.jpg')
 
 # Apoio
-SWIM   = b64('/home/coelho/whoop-luanda/assets/SWIM.opt.jpg')
-CLINIC = b64('/home/coelho/whoop-luanda/assets/CLINIC.opt.jpg')
 
 src = open('/home/coelho/whoop-luanda/cinematic-template.html', encoding='utf-8').read()
 
@@ -42,8 +40,6 @@ subs = {
     'VIDEO_01_POSTER_IMG': VIDEO_01_POSTER,
     'VIDEO_02_POSTER_IMG': VIDEO_02_POSTER,
     'VIDEO_03_POSTER_IMG': VIDEO_03_POSTER,
-    'SWIM_IMG': SWIM,
-    'CLINIC_IMG': CLINIC
 }
 
 for k, v in subs.items():
