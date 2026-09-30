@@ -1170,7 +1170,7 @@ details.faq-item[open] summary::after {
 
 <!-- ============ PORTAL OBRIGATÓRIO: VÍDEO DE ENTRADA ============ -->
 <div class="gate-overlay" id="gateOverlay" aria-label="Vídeo obrigatório de entrada">
-  <video class="gate-video" id="gateVideo" src="assets/videos/video_intro_obrigatorio.mp4" playsinline preload="auto"></video>
+  <video class="gate-video" id="gateVideo" src="assets/videos/video_intro_obrigatorio.mp4" playsinline autoplay muted preload="auto"></video>
   <div class="gate-ui">
     <div class="gate-brand">WHOOP 5.0 · Angola</div>
     <div class="gate-progress-wrap"><div class="gate-progress-bar" id="gateBar"></div></div>
@@ -1928,37 +1928,13 @@ details.faq-item[open] summary::after {
   video.addEventListener('ended', unlock);
   video.addEventListener('error', unlock);
 
-  // Arranque COM SOM; se o navegador bloquear, pede um toque (mantendo o som)
-  function start() {
-    video.muted = false;
-    var p = video.play();
-    if (p && p.catch) {
-      p.catch(function() {
-        var started = false;
-        function begin() {
-          if (started) return;
-          started = true;
-          video.muted = false;
-          video.play().catch(function() {
-            video.muted = true;          // último recurso: arranca em mudo
-            video.play().catch(function() {});
-          });
-        }
-        hint.textContent = 'Toca no ecrã para ouvir com som';
-        document.addEventListener('click', begin, { once: true });
-        document.addEventListener('touchstart', begin, { once: true });
-        // Segurança: se em 6s nada tocou, arranca em mudo para não prender ninguém
-        setTimeout(function() {
-          if (video.paused) {
-            video.muted = true;
-            video.play().catch(function() {});
-            hint.textContent = 'O vídeo desbloqueia o site ao terminar';
-          }
-        }, 6000);
-      });
-    }
-  }
-  start();
+  // Arranque 100% AUTOMÁTICO: começa mudo (browsers obrigam), tenta ligar o som;
+  // se o navegador bloquear o som, o vídeo continua a tocar mudo sem precisar de toque.
+  video.muted = true;
+  video.play().catch(function() {});
+  function tryUnmute() { video.muted = false; }
+  document.addEventListener('click', function() { tryUnmute(); }, { once: true });
+  document.addEventListener('touchstart', function() { tryUnmute(); }, { once: true });
 
   // Redundância: timer de segurança de 30s
   setTimeout(function() {
