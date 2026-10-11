@@ -3,6 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- VÍDEO PORTAL OBRIGATÓRIO -->
+<style>
+.gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.gate-overlay.gate-open {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.gate-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gate-ui {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+.gate-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.gate-text {
+  font-size: 13px;
+  color: #a5a5a5;
+  letter-spacing: 0.1em;
+}
+</style>
 <title>WHOOP 5.0 Angola | Monitoriza o Sono, a Recuperação e o Desempenho</title>
 <meta name="description" content="Descobre o WHOOP 5.0 em Angola. Acompanha o teu sono, recuperação e esforço físico. Disponível por 150.000 Kz, com 1 mês de subscrição incluído.">
 <meta name="robots" content="index, follow">
@@ -53,6 +98,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+body.gate-locked { overflow: hidden !important; height: 100vh !important; }
+body.gate-locked > *:not(.gate-overlay) { filter: blur(20px) brightness(.45); transition: filter 1s ease; }
 
 /* Grão cinematográfico subtil */
 .film-grain {
@@ -1120,63 +1167,17 @@ details.faq-item[open] summary::after {
   }
   .fade-up { opacity: 1 !important; transform: none !important; }
 }
-
-  /* ============ PORTAL OBRIGATÓRIO (GATE) ============ */
-  .gate-overlay {
-    position: fixed; inset: 0; z-index: 99999;
-    background: rgba(4,4,4,.38); display: flex; align-items: center; justify-content: center;
-    transition: opacity .9s ease, visibility .9s ease;
-  }
-  .gate-overlay.gate-open { opacity: 0; visibility: hidden; pointer-events: none; }
-  .gate-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-  .gate-ui {
-    position: absolute; top: 0; left: 0; right: 0; z-index: 2;
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-    padding-top: max(24px, env(safe-area-inset-top, 0px));
-    pointer-events: none;
-  }
-  .gate-brand {
-    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
-    letter-spacing: .22em; color: #fff; text-transform: uppercase;
-    text-shadow: 0 2px 12px rgba(0,0,0,.8);
-  }
-  .gate-progress-wrap {
-    width: min(320px, 72vw); height: 3px; background: rgba(255,255,255,.18);
-    border-radius: 2px; overflow: hidden;
-  }
-  .gate-progress-bar {
-    height: 100%; width: 0%; background: #fff; border-radius: 2px;
-    transition: width .25s linear;
-  }
-  .gate-count {
-    font-family: 'Manrope', sans-serif; font-size: 12px; letter-spacing: .18em;
-    color: rgba(255,255,255,.85); text-shadow: 0 1px 8px rgba(0,0,0,.8);
-  }
-  .gate-hint {
-    position: absolute; bottom: max(28px, env(safe-area-inset-bottom, 0px)); left: 0; right: 0;
-    text-align: center; z-index: 2; pointer-events: none;
-    font-family: 'Manrope', sans-serif; font-size: 12px; letter-spacing: .14em;
-    color: rgba(255,255,255,.6); text-shadow: 0 1px 8px rgba(0,0,0,.8);
-    text-transform: uppercase;
-  }
-  /* Site desfocado e escurecido atrás do vídeo; o foco volta quando o vídeo acaba */
-  body > *:not(.gate-overlay) { transition: filter 1s ease; }
-  body.gate-locked { overflow: hidden !important; height: 100vh !important; }
-  body.gate-locked > *:not(.gate-overlay) { filter: blur(20px) brightness(.45); }
-
 </style>
 </head>
 <body class="gate-locked">
 
-<!-- ============ PORTAL OBRIGATÓRIO: VÍDEO DE ENTRADA ============ -->
-<div class="gate-overlay" id="gateOverlay" aria-label="Vídeo obrigatório de entrada">
-  <video class="gate-video" id="gateVideo" src="assets/videos/video_intro_obrigatorio.mp4" playsinline preload="auto"></video>
+<!-- VÍDEO PORTAL OBRIGATÓRIO -->
+<div class="gate-overlay" id="gateOverlay">
+  <video class="gate-video" id="gateVideo" src="assets/videos/video_intro_obrigatorio.mp4" playsinline muted preload="auto"></video>
   <div class="gate-ui">
     <div class="gate-brand">WHOOP 5.0 · Angola</div>
-    <div class="gate-progress-wrap"><div class="gate-progress-bar" id="gateBar"></div></div>
-    <div class="gate-count" id="gateCount">Assiste até ao fim para entrar · 10s</div>
+    <div class="gate-text">O vídeo desbloqueia o site ao terminar</div>
   </div>
-  <div class="gate-hint" id="gateHint">O vídeo desbloqueia o site ao terminar</div>
 </div>
 
 
@@ -1892,80 +1893,21 @@ details.faq-item[open] summary::after {
     reveals.forEach(function(r) { r.classList.add('in'); });
   }
 
+  // VÍDEO PORTAL OBRIGATÓRIO
+  var gateVideo = document.getElementById('gateVideo');
+  var gateOverlay = document.getElementById('gateOverlay');
+  if (gateVideo && gateOverlay) {
+    gateVideo.muted = true;
+    gateVideo.play().catch(function(){});
+    gateVideo.addEventListener('timeupdate', function() {
+      if (gateVideo.currentTime >= gateVideo.duration - 0.5) {
+        gateOverlay.classList.add('gate-open');
+        document.body.classList.remove('gate-locked');
+        setTimeout(function() { gateOverlay.style.display = 'none'; }, 800);
+      }
+    });
+  }
 })();
 </script>
-
-<script>
-// ============ LÓGICA DO PORTAL OBRIGATÓRIO ============
-(function() {
-  var video   = document.getElementById('gateVideo');
-  var bar     = document.getElementById('gateBar');
-  var count   = document.getElementById('gateCount');
-  var hint    = document.getElementById('gateHint');
-  var overlay = document.getElementById('gateOverlay');
-
-  function unlock() {
-    if (!document.body.classList.contains('gate-locked')) return;
-    try { video.pause(); } catch(e) {}
-    overlay.classList.add('gate-open');            // fase 1: vídeo esvanece
-    setTimeout(function() {
-      document.body.classList.remove('gate-locked'); // fase 2: site ganha foco (dessfoca)
-      window.scrollTo(0, 0);
-    }, 350);
-    setTimeout(function() { overlay.style.display = 'none'; }, 1400);
-  }
-
-  if (!video || !overlay) { document.body.classList.remove('gate-locked'); return; }
-
-  var DUR = 10; // desbloqueia aos 10 segundos
-  video.addEventListener('timeupdate', function() {
-    var pct = Math.min(100, (video.currentTime / DUR) * 100);
-    bar.style.width = pct + '%';
-    var left = Math.max(0, Math.ceil(DUR - video.currentTime));
-    if (left > 0) count.textContent = 'Assiste até ao fim para entrar · ' + left + 's';
-    if (video.currentTime >= DUR) unlock();
-  });
-  video.addEventListener('ended', unlock);
-  video.addEventListener('error', unlock);
-
-  // Arranque COM SOM; se o navegador bloquear, pede um toque (mantendo o som)
-  function start() {
-    video.muted = false;
-    var p = video.play();
-    if (p && p.catch) {
-      p.catch(function() {
-        var started = false;
-        function begin() {
-          if (started) return;
-          started = true;
-          video.muted = false;
-          video.play().catch(function() {
-            video.muted = true;          // último recurso: arranca em mudo
-            video.play().catch(function() {});
-          });
-        }
-        hint.textContent = 'Toca no ecrã para ouvir com som';
-        document.addEventListener('click', begin, { once: true });
-        document.addEventListener('touchstart', begin, { once: true });
-        // Segurança: se em 6s nada tocou, arranca em mudo para não prender ninguém
-        setTimeout(function() {
-          if (video.paused) {
-            video.muted = true;
-            video.play().catch(function() {});
-            hint.textContent = 'O vídeo desbloqueia o site ao terminar';
-          }
-        }, 6000);
-      });
-    }
-  }
-  start();
-
-  // Redundância: timer de segurança de 30s
-  setTimeout(function() {
-    if (document.body.classList.contains('gate-locked')) unlock();
-  }, 30000);
-})();
-</script>
-
 </body>
 </html>
