@@ -1734,6 +1734,13 @@ details.faq-item[open] summary::after {
   if (root) {
     root.addEventListener('change', function(e) {
       if (e.target.matches('input, select')) refreshMessage();
+
+  document.querySelectorAll('js-wa-trigger').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
     });
 
     root.querySelector('#wbcClose').addEventListener('click', closeModal);
@@ -1776,7 +1783,12 @@ details.faq-item[open] summary::after {
     refreshMessage();
   }
 
-  
+  document.querySelectorAll('.js-wa-trigger').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
 })();
 </script>
 
