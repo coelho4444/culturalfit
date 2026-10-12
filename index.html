@@ -1896,11 +1896,14 @@ details.faq-item[open] summary::after {
   // VÍDEO PORTAL OBRIGATÓRIO
   var gateVideo = document.getElementById('gateVideo');
   var gateOverlay = document.getElementById('gateOverlay');
+  var gateOpened = false;
   if (gateVideo && gateOverlay) {
     gateVideo.muted = true;
     gateVideo.play().catch(function(){});
     gateVideo.addEventListener('timeupdate', function() {
-      if (gateVideo.currentTime >= gateVideo.duration - 0.5) {
+      if (!gateOpened && gateVideo.currentTime >= gateVideo.duration - 0.5) {
+        gateOpened = true;
+        gateVideo.pause();
         gateOverlay.classList.add('gate-open');
         document.body.classList.remove('gate-locked');
         setTimeout(function() { gateOverlay.style.display = 'none'; }, 800);
