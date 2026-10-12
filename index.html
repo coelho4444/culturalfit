@@ -2483,6 +2483,12 @@ details.faq-item[open] summary::after {
       }
     });
   }
+  document.querySelectorAll('.js-wa-trigger').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
 })();
 </script>
 </body>
