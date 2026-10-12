@@ -2261,25 +2261,6 @@ details.faq-item[open] summary::after {
   // Disparo: Visualização da landing page
   window.trackEvent('page_view', { page: 'whoop_5_angola_cinematic' });
 
-  // Inicializar todos os links de WhatsApp centralizadamente
-  document.querySelectorAll('.js-wa-trigger').forEach(function(el) {
-    var loc = el.getAttribute('data-location') || 'unknown';
-    el.setAttribute('href', buildWhatsAppUrl(loc));
-    el.setAttribute('target', '_blank');
-    el.setAttribute('rel', 'noopener noreferrer');
-
-    el.addEventListener('click', function() {
-      window.trackEvent('whatsapp_click', {
-        location: loc,
-        price: '150.000 Kz',
-        product: 'WHOOP 5.0'
-      });
-      if (loc.indexOf('hero') !== -1 || loc.indexOf('offer') !== -1 || loc.indexOf('final') !== -1) {
-        window.trackEvent('primary_cta_click', { location: loc });
-      }
-    });
-  });
-
   // Disparo: Clique no CTA Secundário (Descobrir o WHOOP)
   document.querySelectorAll('.js-scroll-trigger').forEach(function(el) {
     el.addEventListener('click', function() {
