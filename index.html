@@ -34,20 +34,6 @@
   color: #fff;
   padding: 20px;
 }
-.gate-toggle {
-  margin-top: 12px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.gate-toggle:hover {
-  background: rgba(255,255,255,0.25);
-}
 .gate-brand {
   font-family: 'Syne', sans-serif;
   font-size: 18px;
@@ -1191,7 +1177,6 @@ details.faq-item[open] summary::after {
   <div class="gate-ui">
     <div class="gate-brand">WHOOP 5.0 · Angola</div>
     <div class="gate-text">O vídeo desbloqueia o site ao terminar</div>
-    <button class="gate-toggle" id="gateToggle">🔇 Ativar som</button>
   </div>
 </div>
 
@@ -2507,20 +2492,6 @@ details.faq-item[open] summary::after {
   if (gateVideo && gateOverlay) {
     gateVideo.muted = true;
     gateVideo.play().catch(function(){});
-
-    var gateToggle = document.getElementById('gateToggle');
-    if (gateToggle) {
-      gateToggle.addEventListener('click', function() {
-        if (gateVideo.muted) {
-          gateVideo.muted = false;
-          gateToggle.textContent = '🔊 Silenciar';
-        } else {
-          gateVideo.muted = true;
-          gateToggle.textContent = '🔇 Ativar som';
-        }
-      });
-    }
-
     gateVideo.addEventListener('timeupdate', function() {
       if (!gateOpened && gateVideo.currentTime >= gateVideo.duration - 0.5) {
         gateOpened = true;
