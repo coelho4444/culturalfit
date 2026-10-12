@@ -1898,7 +1898,8 @@ details.faq-item[open] summary::after {
   var gateOverlay = document.getElementById('gateOverlay');
   var gateOpened = false;
   if (gateVideo && gateOverlay) {
-    gateVideo.muted = true;
+    gateVideo.muted = false;
+    gateVideo.volume = 0.5;
     gateVideo.play().catch(function(){});
     gateVideo.addEventListener('timeupdate', function() {
       if (!gateOpened && gateVideo.currentTime >= gateVideo.duration - 0.5) {
